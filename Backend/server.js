@@ -1,17 +1,25 @@
 const express = require("express");
+const cors = require("cors")
 const mongoose = require("mongoose");
 const Product = require("./model/productModel");
 const Bill = require("./model/billModel");
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
+//adding cors policy
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET, POST, PUT, DELETE, PATCH",
+  credentials: true
+}
+app.use(cors(corsOptions))
 // Sample route
 app.get("/", (req, res) => res.send("Hello, World!"));
 app.use(express.json()); // Middleware to parse JSON request body
 
 // Add Product API
-app.post("/add-product", async (req, res) => {
-  try {
+app.post("/api/add-product", async (req, res) => {
+    try {
     const { name, price, category, stock, description } = req.body;
 
     const newProduct = new Product({

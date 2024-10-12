@@ -16,11 +16,15 @@ const productSchema = new mongoose.Schema({
     required: true,
     enum: ["Electronics", "Clothing", "Accessories", "Home", "Food"],
   },
-  quantity: {
+  stock: {
     type: Number,
     required: true,
     min: 0,
     default: 0,
+  },
+  description: {
+    type: String,
+    required: false
   },
   
   

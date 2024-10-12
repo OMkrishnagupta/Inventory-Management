@@ -27,12 +27,22 @@ const Bill = () => {
     setProducts([...products, { productId: "", quantity: 1, price: 0 }]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const billData = { customerName, products, totalAmount };
 
     // Send billData to your backend API or save the bill
     console.log(billData);
+    try {await fetch(`http://localhost:5000/api/bills`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body : JSON.stringify(billData),
+    });}
+    catch(error){
+      console.log("register", error);
+    }
 
     setBillCreated(true); // Set bill as created to display and print
   };
@@ -70,7 +80,7 @@ const Bill = () => {
             <input
               type="number"
               name="quantity"
-              value={product.quantity}
+              value={Number(product.quantity)}
               onChange={(e) => handleProductChange(index, e)}
               min="1"
               required
@@ -80,7 +90,7 @@ const Bill = () => {
             <input
               type="number"
               name="price"
-              value={product.price}
+              value={Number(product.price)}
               onChange={(e) => handleProductChange(index, e)}
               min="0"
               required
