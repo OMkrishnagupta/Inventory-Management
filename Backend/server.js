@@ -82,6 +82,15 @@ app.post("/api/bills", async (req, res) => {
     res.status(500).json({ message: "Error creating bill", error });
   }
 });
+
+app.get("/api/stocks", async (req,res)=>{
+  try {
+    const products = await Product.find();
+    res.status(200).send(products);
+} catch (err) {
+    res.status(500).send({message:err}) 
+}
+})
 // MongoDB connection
 mongoose
   .connect(
