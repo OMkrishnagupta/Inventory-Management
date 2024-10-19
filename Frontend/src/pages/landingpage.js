@@ -1,7 +1,26 @@
-import React from 'react'
+import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+  NumberInput,
+  NumberInputField,
+  Textarea,
+  Select,
 
-const landingpage = () => {
+} from '@chakra-ui/react';
+import { useDisclosure } from '@chakra-ui/react';
+
+const Landingpage = () => {
   return (
     <div className="bg-yellow-500 min-h-screen">
       {/* Your content goes here */}
@@ -32,6 +51,7 @@ const landingpage = () => {
                 See and Create Bills
               </button>
             </Link>
+            <div><AddStockBtn /></div>
           </div>
         </div>
       </div>
@@ -39,4 +59,128 @@ const landingpage = () => {
   );
 }
 
-export default landingpage
+const AddStockBtn =()=> {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  // State to handlw form inputs
+  const [formData, setFormData] = useState({
+    name:'',
+    price: 0,
+    category: '',
+    stock: 0,
+    description: ''
+  })
+
+  // Handle input change 
+  const handleChange =(e)=>{
+    const {name, value} = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Handle number input
+  const handleNumberChange = (value, name)=>{
+    setFormData({
+      ...formData,
+      [name]:value,
+    });
+  };
+
+  const handleSubmit = async() =>{
+    try {await fetch(`http://localhost:5000/api/add-product`,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body : JSON.stringify(formData),
+    });
+    onClose();
+  }
+    catch(error){
+      console.log("Error", error);
+    }
+  }
+
+  return (
+    <>
+      <Button onClick={onOpen}>Add New Stock</Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add a New Product</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+          <FormControl isRequired>
+            <FormLabel>Product Name</FormLabel>
+            <Input placeholder='Product Name'
+                   name='name'
+                   value={formData.name}
+                   onChange={handleChange} />
+          </FormControl>
+
+          <FormControl isRequired mt={4}>
+            <FormLabel>Price</FormLabel>
+            <NumberInput 
+              min={0}
+              value={formData.price}
+              onChange={(value)=>handleNumberChange(value, 'price')}
+             >
+              <NumberInputField name='price' placeholder='Enter price'></NumberInputField>
+             </NumberInput> 
+             
+          </FormControl>
+          <FormControl isRequired mt={4}>
+          <FormLabel>Category</FormLabel>
+              <Select
+                placeholder="Select category"
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+              >
+                <option value="Electronics">Electronics</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Home">Home</option>
+                <option value="Food">Food</option>
+              </Select>
+            </FormControl>
+            
+            <FormControl isRequired mt={4}>
+              <FormLabel>Stock</FormLabel>
+              <NumberInput
+                min={0}
+                value={formData.stock}
+                onChange={(value) => handleNumberChange(value, 'stock')}
+              >
+                <NumberInputField name="stock" placeholder="Enter stock" />
+              </NumberInput>
+            </FormControl>
+            
+            <FormControl mt={4}>
+              <FormLabel>Description</FormLabel>
+              <Textarea
+                placeholder="Enter product description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+              />
+            </FormControl>
+
+
+          </ModalBody>
+
+          <ModalFooter>
+          <Button colorScheme='blue' mr={3} onClick={handleSubmit}>
+            Save
+          </Button>
+          <Button onClick={onClose}>Cancel</Button>
+        </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  )
+}
+export default Landingpage
