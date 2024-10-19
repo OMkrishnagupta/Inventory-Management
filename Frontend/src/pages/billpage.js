@@ -32,7 +32,6 @@ const Bill = () => {
     const billData = { customerName, products, totalAmount };
 
     // Send billData to your backend API or save the bill
-    console.log(billData);
     try {await fetch(`http://localhost:5000/api/bills`,{
       method: "POST",
       headers: {
@@ -52,7 +51,8 @@ const Bill = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
+    <div class = "bg-yellow-500 min-h-screen">
+    <div style={{}}className="max-w-md mx-auto p-4 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Create Bill</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -143,6 +143,7 @@ const Bill = () => {
           </button>
         </div>
       )}
+    </div>
     </div>
   );
 };
