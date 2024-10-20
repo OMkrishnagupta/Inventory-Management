@@ -91,6 +91,35 @@ app.get("/api/stocks", async (req,res)=>{
     res.status(500).send({message:err}) 
 }
 })
+app.get("/api/get-bills", async (req,res)=>{
+  try{
+    const bills = await Bill.find({},{ customerName:1, billDate:1, _id:1} );
+    res.status(200).send(bills);
+  }catch(err){
+    res.status(500).send({message: err})
+  }
+})
+
+app.get("/api/get-bills-length", async (req,res)=>{
+    try{
+      const bills = await Bill.find();
+      const length = bills.length;
+      res.status(200).send(JSON.stringify(length));
+    }catch(err){
+      res.status(500).send({message: err})
+    }
+})
+app.get("/api/stocks-length", async (req,res)=>{
+  try {
+    const products = await Product.find();
+    const length = products.length;
+    res.status(200).send(JSON.stringify(length));
+} catch (err) {
+    res.status(500).send({message:err}) 
+}
+})
+
+
 // MongoDB connection
 mongoose
   .connect(
