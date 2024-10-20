@@ -19,8 +19,13 @@ import {
 
 } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
+import { useBillNums } from '../custom hooks/useBillNums';
+import { useStockCount } from '../custom hooks/useStockCount';
 
 const Landingpage = () => {
+  const billCount = useBillNums();
+  const stockCount = useStockCount();
+
   return (
     <div className="bg-yellow-500 min-h-screen">
       {/* Your content goes here */}
@@ -29,29 +34,34 @@ const Landingpage = () => {
         <div className="grid grid-cols-3 gap-4">
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl">Total Products</h2>
-            <p className="text-2xl font-bold">7</p>
+            <p className="text-2xl font-bold">{stockCount}</p>
           </div>
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl">Total Bills</h2>
-            <p className="text-2xl font-bold">10</p>
+            <p className="text-2xl font-bold">{billCount}</p>
           </div>
           <div className="bg-white p-4 rounded shadow">
             <h2 className="text-xl">Total Categories</h2>
-            <p className="text-2xl font-bold">4</p>
+            <p className="text-2xl font-bold">5</p>
           </div>
-          <div className="m-6 flex justify-center space-x-10">
+          <div className="m-6 flex justify-center space-x-10 flex-wrapm-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Link to="/stocks">
               <button className="bg-blue-400 hover:bg-blue-700 text-black font-bold py-3 px-6 rounded text-xl">
-                Manage Stocks
+                View Stocks
               </button>
             </Link>
-
             <Link to="/bills">
               <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded text-xl">
-                See and Create Bills
+                Create Bills
+              </button>
+            </Link>
+            <Link to="/get-bills">
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded text-xl">
+                View Bills
               </button>
             </Link>
             <div><AddStockBtn /></div>
+            
           </div>
         </div>
       </div>
