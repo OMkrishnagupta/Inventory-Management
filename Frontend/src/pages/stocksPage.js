@@ -1,7 +1,7 @@
 import { Box, SimpleGrid, Heading} from '@chakra-ui/react';
 import { useStocks } from '../custom hooks/useStocks';
 
-const Card = ({ key, title, price, category, quantity, description }) => (
+const Card = ({ title, price, category, quantity, description }) => (
   <Box
     p={5}
     shadow="md"

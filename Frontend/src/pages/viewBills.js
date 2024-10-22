@@ -1,10 +1,8 @@
 import React from 'react';
-import { Box, SimpleGrid, Heading, Button } from '@chakra-ui/react';
+import { Box, SimpleGrid, Heading,} from '@chakra-ui/react';
 import { useViewBills } from '../custom hooks/useViewBills';
+import { FetchAndGeneratePDF } from '../components/printSpecificBill';
 
-function handlePrint(){
-    
-}
 const Card = ({ title, date, time,id }) => (
   <Box
     p={5}
@@ -17,17 +15,13 @@ const Card = ({ title, date, time,id }) => (
     <Heading fontSize="xl" mb={2}>{title}</Heading>
     <p>Date: {date} </p>
     <p>Time of issue: {time}</p>
-    <p>ID: {id}</p>
-    <Button onClick={handlePrint} colorScheme="blue" mt={4}>
-        Print Bill
-      </Button>
+    <p>ID:{id}</p>
+    <FetchAndGeneratePDF billId={id}/>
   </Box>
 );
 
 export const CardContainer = () => {
     const bills = useViewBills();
-    console.log(bills)
-
   return (
     <Box 
       display="flex" 
