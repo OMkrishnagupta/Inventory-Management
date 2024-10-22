@@ -109,6 +109,7 @@ app.get("/api/get-bills-length", async (req,res)=>{
       res.status(500).send({message: err})
     }
 })
+
 app.get("/api/stocks-length", async (req,res)=>{
   try {
     const products = await Product.find();
@@ -118,7 +119,16 @@ app.get("/api/stocks-length", async (req,res)=>{
     res.status(500).send({message:err}) 
 }
 })
+app.get("/api/specific-bill/:id", async (req,res)=>{
+  try{
+    const objectId = req.params.id;
+    const myObject = await Bill.findById(objectId).populate('products.productId', 'name price description');
 
+    res.json(myObject);
+  }catch(err){
+    res.status(500).json({"error" : err})
+  }
+})
 
 // MongoDB connection
 mongoose
