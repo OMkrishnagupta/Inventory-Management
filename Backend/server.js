@@ -130,6 +130,15 @@ app.get("/api/specific-bill/:id", async (req,res)=>{
   }
 })
 
+app.get("/api/productMapData", async (req,res)=>{
+  try {
+    const products = await Product.find({},{name:1, _id:1});
+    res.status(200).send(products);
+} catch (err) {
+    res.status(500).send({message:err}) 
+}
+})
+
 // MongoDB connection
 mongoose
   .connect(

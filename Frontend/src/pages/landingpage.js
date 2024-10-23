@@ -44,12 +44,14 @@ const Landingpage = () => {
             <h2 className="text-xl">Total Categories</h2>
             <p className="text-2xl font-bold">5</p>
           </div>
-          <div className="m-6 flex justify-center space-x-10 flex-wrapm-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+  
+          <div className="flex justify-between gap-4">
             <Link to="/stocks">
-              <button className="bg-blue-400 hover:bg-blue-700 text-black font-bold py-3 px-6 rounded text-xl">
+              <button className="bg-blue-400 hover:bg-blue-700 text-black font-bold py-3 px-6 rounded text-xl ">
                 View Stocks
               </button>
             </Link>
+            <div><AddStockBtn /></div>
             <Link to="/bills">
               <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded text-xl">
                 Create Bills
@@ -60,7 +62,7 @@ const Landingpage = () => {
                 View Bills
               </button>
             </Link>
-            <div><AddStockBtn /></div>
+            
             
           </div>
         </div>
@@ -115,7 +117,17 @@ const AddStockBtn =()=> {
 
   return (
     <>
-      <Button onClick={onOpen}>Add New Stock</Button>
+      <Button onClick={onOpen} 
+       style={{
+        backgroundColor: '#60a5fa', // Equivalent to bg-blue-400
+        color: 'black',              // Equivalent to text-black
+        fontWeight: 'bold',          // Equivalent to font-bold
+        padding: '12px 24px',        // Equivalent to py-3 px-6
+        borderRadius: '0.375rem',    // Equivalent to rounded (Tailwind default)
+        fontSize: '1.25rem',         // Equivalent to text-xl
+        transition: 'background-color 0.3s',
+        margin: '20px 0', // Smooth transition for hover effect
+      }}>Add Stock</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -193,4 +205,4 @@ const AddStockBtn =()=> {
     </>
   )
 }
-export default Landingpage
+export default Landingpage;
